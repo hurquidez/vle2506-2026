@@ -18,7 +18,7 @@ jobs:
           curl -s -c cookies.txt \
             -d "Username=${{ secrets.PORTAL_USER }}" \
             -d "Password=${{ secrets.PORTAL_PASS }}" \
-            "https://ownerslaestancia.com/cabo/calendar/792?year=2026&view=quarter&q=4&handler=Ics"
+            "https://ownerslaestancia.com/cabo/login"
 
           # 2. Download the actual file using that session cookie
           curl -s -b cookies.txt -L "${{ secrets.CALENDAR_URL }}" -o your_file.ics
