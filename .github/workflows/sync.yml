@@ -14,17 +14,18 @@ jobs:
 
       - name: Log In and Fetch Calendar File
         run: |
-          # 1. Log into the portal and save the session cookie
-          curl -s -c cookies.txt \
-            -d "Username=${{ secrets.PORTAL_USER }}" \
-            -d "Password=${{ secrets.PORTAL_PASS }}" \
-            "https://ownerslaestancia.com/cabo/login"
+          # 1. Access the main page first to capture initial session cookies
+          curl -s -c cookies.txt -L "https://ownerslaestancia.com/"
 
-          # 2. Download the actual file using that session cookie
-          curl -s -b cookies.txt -L "${{ secrets.CALENDAR_URL }}" -o your_file.ics
+          # 2. Log in using your stored secrets, preserving the session cookies
+          curl -s -b cookies.txt -c cookies.txt -L \
+            --data-urlencode "Username=${{ secrets.PORTAL_USER }}" \
+            --data-urlencode "Password=${{ secrets.PORTAL_PASS }}" \
+            "https://ownerslaestancia.com/cabo/calendar/792?year=2026&view=quarter&q=4&handler=Ics" \
+            -o your_file.ics
 
           # 3. Clean up the cookie file for security
-          rm cookies.txt
+          rm -f cookies.txt
 
       - name: Commit and Push Changes
         run: |
