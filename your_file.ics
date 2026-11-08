@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign In - Villa La Estancia Owners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Poppins:wght@400&family=Raleway:wght@400&family=Inter:wght@400;700&family=Plus+Jakarta+Sans:wght@600&family=Quicksand:wght@400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.46ein0sx1k.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+<link rel="stylesheet" href="/css/site.xuljnkotst.css" />
+
+</head>
+<body class="rp-public">
+    <header class="rp-header rp-header-centered">
+        <a href="/"><img src="/img/logo-estancia.29veyv8all.png" alt="Villa La Estancia" class="rp-logo-public" /></a>
+    </header>
+    <main class="rp-public-main">
+        <div class="rp-hero rp-login rp-login-cabo" style="background-image:url('/img/resorts/cabo.jpg')">
+    <img src="/img/login/ellipse-cabo.7eh0mam89q.svg" alt="" class="rp-login-ellipse" />
+    <form method="post" class="rp-login-card" action="/cabo/login?returnUrl=%2Fcabo%2Fcalendar%2F792%3Fyear%3D2026%26view%3Dquarter%26q%3D4%26handler%3DIcs">
+        <div class="rp-login-fields">
+            <h1>Welcome Back!</h1>
+            <div class="rp-login-field">
+                <label class="visually-hidden" for="Input_Username">Username</label>
+                <input class="form-control" placeholder="Username" autocomplete="username" autofocus type="text" data-val="true" data-val-required="Please, write your user name." id="Input_Username" name="Input.Username" value="" />
+            </div>
+            <div class="rp-login-field">
+                <label class="visually-hidden" for="Input_Password">Password</label>
+                <input class="form-control" placeholder="Password" autocomplete="current-password" type="password" data-val="true" data-val-required="Please, write your password." id="Input_Password" name="Input.Password" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary rp-login-submit">Sign In</button>
+        <a class="rp-forgot" href="/cabo/forgot-password">Forgot Password</a>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8E4U1lvlknJHm3cuXXaakkWiUNIiU6lQSJ9Fkq0eKsXzTEqRfJwbsbw--ndrwBZysuFjP3K1MG3KYja2QcxrNhTxnp6gPLX9RHyNQyaBBw1uGLUuOO91_jO-ugqT9Fg2iBRiwFDxDIhQTvztrIbHkUc" /></form>
+</div>
+
+    </main>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.493y06b0oq.js"></script>
+    
+</body>
+</html>
