@@ -1,0 +1,39 @@
+name: Update Calendar
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs automatically every hour.
+  workflow_dispatch: # Allows you to run it manually anytime.
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Log In and Fetch Calendar File
+        run: |
+          # 1. Log into the portal and save the session cookie
+          curl -s -c cookies.txt \
+            -d "Username=${{ secrets.PORTAL_USER }}" \
+            -d "Password=${{ secrets.PORTAL_PASS }}" \
+            "https://ownerslaestancia.com/cabo/calendar/792?year=2026&view=quarter&q=4&handler=Ics"
+
+          # 2. Download the actual file using that session cookie
+          curl -s -b cookies.txt -L "${{ secrets.CALENDAR_URL }}" -o your_file.ics
+
+          # 3. Clean up the cookie file for security
+          rm cookies.txt
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add your_file.ics
+          if ! git diff --staged --quiet; then
+            git commit -m "Automated calendar update from La Estancia Portal"
+            git push
+          else
+            echo "No changes detected in calendar feed."
+          fi
