@@ -2,29 +2,30 @@ name: Update Calendar
 
 on:
   schedule:
-    - cron: '0 * * * *' # Runs automatically every hour.
-  workflow_dispatch: # Allows you to run it manually anytime.
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    # 👇 ADD THESE TWO LINES HERE 👇
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Log In and Fetch Calendar File
         run: |
-          # 1. Access the main page first to capture initial session cookies
-          curl -s -c cookies.txt -L "https://ownerslaestancia.com/"
+          curl -s -c cookies.txt -L "https://ownerslaestancia.com"
 
-          # 2. Log in using your stored secrets, preserving the session cookies
           curl -s -b cookies.txt -c cookies.txt -L \
             --data-urlencode "Username=${{ secrets.PORTAL_USER }}" \
             --data-urlencode "Password=${{ secrets.PORTAL_PASS }}" \
-            "https://ownerslaestancia.com/cabo/calendar/792?year=2026&view=quarter&q=4&handler=Ics" \
+            "https://ownerslaestancia.comcabo/calendar/792?year=2026&view=quarter&q=4&handler=Ics" \
             -o your_file.ics
 
-          # 3. Clean up the cookie file for security
           rm -f cookies.txt
 
       - name: Commit and Push Changes
