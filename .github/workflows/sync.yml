@@ -9,7 +9,7 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Ensures GitHub can save the file back to your repo
+      contents: write
 
     steps:
       - name: Checkout Repository
@@ -17,18 +17,22 @@ jobs:
 
       - name: Log In and Fetch Calendar File
         run: |
-          # 1. Access the main page first to capture initial session cookies
-          curl -s -c cookies.txt -L "https://ownerslaestancia.com"
+          # 1. Request the main calendar URL to pull initial cookies and any hidden fields
+          curl -s -c cookies.txt -L "https://ownerslaestancia.com" > login_page.html
 
-          # 2. Log in using your stored secrets and hit the explicit calendar file handler URL
+          # 2. Automatically extract hidden request verification tokens if the site uses them
+          TOKEN=$(grep -oP 'name="__RequestVerificationToken" type="hidden" value="\K[^"]+' login_page.html || echo "")
+
+          # 3. Submit the credentials along with the token and cookies to download the real file
           curl -s -b cookies.txt -c cookies.txt -L \
             --data-urlencode "Username=${{ secrets.PORTAL_USER }}" \
             --data-urlencode "Password=${{ secrets.PORTAL_PASS }}" \
-            "https://ownerslaestancia.com/cabo/calendar/792?year=2026&view=quarter&q=4&handler=Ics" \
+            --data-urlencode "__RequestVerificationToken=$TOKEN" \
+            "https://ownerslaestancia.com" \
             -o your_file.ics
 
-          # 3. Clean up the cookie file for security
-          rm -f cookies.txt
+          # 4. Clean up temporary files
+          rm -f cookies.txt login_page.html
 
       - name: Commit and Push Changes
         run: |
